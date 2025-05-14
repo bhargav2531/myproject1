@@ -1,0 +1,37 @@
+pipeline { 
+    agent any
+    environment {
+        SONARQUBE_SERVER = 'http://3.94.132.103:9000'  // Replace with the actual IP address of your SonarQube server
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm  
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Run SonarQube analysis
+                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=myproject -Dsonar.host.url=http://3.94.132.103:9000'  // Replace with your SonarQube IP
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    // Add Docker build command here
+                    sh 'docker build -t mywebsite .'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Add Docker deploy command here, e.g., push image to ECS
+                    sh 'docker push mywebsite'
+                }
+            }
+        }
+    }
+}
