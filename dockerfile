@@ -27,7 +27,7 @@ COPY /tmp/nginx_config/${DEFAULT_CONF} ${CONFIG_DIR}/
 # Copy static assets.
 COPY /tmp/nginx_config/ /usr/share/nginx/html/
 
-# Remove the cloned repository.  Do it in the same RUN command
+# Remove the cloned repository.
 RUN rm -rf /tmp/nginx_config
 
 # Expose the port.
